@@ -2,6 +2,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Header() {
   return (
@@ -9,17 +10,11 @@ export default function Header() {
       <div className="mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center">
-              <i className="ri-map-pin-fill text-white text-lg w-5 h-5 flex items-center justify-center"></i>
-            </div>
             <div>
-              <h1 className="text-2xl font-bold text-blue-900" style={{fontFamily: 'Pacifico, serif'}}>
-                Kilometer Travel Solution
-              </h1>
-              <p className="text-xs text-gray-600">Your Journey, Our Expertise</p>
+              <Image src="/logo.png" alt="Kilometer Logo" width={64} height={64} style={{ objectFit: 'contain' }} />
             </div>
           </div>
-          
+
           <nav className="hidden md:flex items-center space-x-8">
             <Link href="#home" className="text-blue-900 hover:text-red-600 font-medium transition-colors whitespace-nowrap cursor-pointer">
               Home
@@ -40,7 +35,7 @@ export default function Header() {
               Contact
             </Link>
           </nav>
-          
+
           <div className="md:hidden">
             <button className="text-blue-900 hover:text-red-600 w-6 h-6 flex items-center justify-center cursor-pointer">
               <i className="ri-menu-line text-xl w-6 h-6 flex items-center justify-center"></i>
