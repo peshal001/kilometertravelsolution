@@ -92,10 +92,10 @@ export default function LocalGuideSpotlight() {
     }
   ];
 
-  const renderStars = (rating) => {
+  const renderStars = (rating: number) => {
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 !== 0;
-    
+
     return (
       <div className="flex items-center space-x-1">
         {[...Array(fullStars)].map((_, i) => (
@@ -119,8 +119,8 @@ export default function LocalGuideSpotlight() {
           {guides.map((guide) => (
             <div key={guide.id} className="bg-gray-50 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
               <div className="relative">
-                <img 
-                  src={guide.image} 
+                <img
+                  src={guide.image}
                   alt={guide.name}
                   className="w-full h-64 object-cover object-top"
                 />
@@ -128,16 +128,16 @@ export default function LocalGuideSpotlight() {
                   {guide.experience}
                 </div>
               </div>
-              
+
               <div className="p-6">
                 <h3 className="text-xl font-semibold text-blue-900 mb-2">{guide.name}</h3>
                 <p className="text-red-600 font-medium mb-3">{guide.specialization}</p>
-                
+
                 <div className="flex items-center justify-between mb-4">
                   {renderStars(guide.rating)}
                   <span className="text-sm text-gray-500">({guide.reviews} reviews)</span>
                 </div>
-                
+
                 <div className="mb-4">
                   <h4 className="text-sm font-semibold text-gray-700 mb-2">Languages:</h4>
                   <div className="flex flex-wrap gap-2">
@@ -148,7 +148,7 @@ export default function LocalGuideSpotlight() {
                     ))}
                   </div>
                 </div>
-                
+
                 <div className="mb-4">
                   <h4 className="text-sm font-semibold text-gray-700 mb-2">Expertise:</h4>
                   <div className="flex flex-wrap gap-2">
@@ -164,7 +164,7 @@ export default function LocalGuideSpotlight() {
                     )}
                   </div>
                 </div>
-                
+
                 <div className="space-y-2">
                   <button
                     onClick={() => setSelectedGuide(guide)}
@@ -194,15 +194,15 @@ export default function LocalGuideSpotlight() {
                     <i className="ri-close-line text-xl w-6 h-6 flex items-center justify-center"></i>
                   </button>
                 </div>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div>
-                    <img 
-                      src={selectedGuide.image} 
+                    <img
+                      src={selectedGuide.image}
                       alt={selectedGuide.name}
                       className="w-full h-80 object-cover object-top rounded-lg mb-4"
                     />
-                    
+
                     <div className="space-y-4">
                       <div>
                         <h4 className="font-semibold text-gray-800 mb-2">Achievements</h4>
@@ -215,7 +215,7 @@ export default function LocalGuideSpotlight() {
                           ))}
                         </ul>
                       </div>
-                      
+
                       <div>
                         <h4 className="font-semibold text-gray-800 mb-2">Popular Tours</h4>
                         <div className="space-y-2">
@@ -228,11 +228,11 @@ export default function LocalGuideSpotlight() {
                       </div>
                     </div>
                   </div>
-                  
+
                   <div>
                     <h3 className="text-2xl font-bold text-blue-900 mb-2">{selectedGuide.name}</h3>
                     <p className="text-red-600 font-medium text-lg mb-4">{selectedGuide.specialization}</p>
-                    
+
                     <div className="grid grid-cols-2 gap-4 mb-6">
                       <div className="bg-gray-50 rounded-lg p-4">
                         <h4 className="font-semibold text-gray-800 mb-1">Experience</h4>
@@ -245,12 +245,12 @@ export default function LocalGuideSpotlight() {
                         </div>
                       </div>
                     </div>
-                    
+
                     <div className="mb-6">
                       <h4 className="font-semibold text-gray-800 mb-2">About</h4>
                       <p className="text-gray-700 leading-relaxed">{selectedGuide.bio}</p>
                     </div>
-                    
+
                     <div className="mb-6">
                       <h4 className="font-semibold text-gray-800 mb-2">Languages</h4>
                       <div className="flex flex-wrap gap-2">
@@ -261,7 +261,7 @@ export default function LocalGuideSpotlight() {
                         ))}
                       </div>
                     </div>
-                    
+
                     <div className="mb-6">
                       <h4 className="font-semibold text-gray-800 mb-2">Expertise</h4>
                       <div className="flex flex-wrap gap-2">
@@ -272,7 +272,7 @@ export default function LocalGuideSpotlight() {
                         ))}
                       </div>
                     </div>
-                    
+
                     <button className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-lg font-semibold transition-colors whitespace-nowrap cursor-pointer">
                       Book Tour with {selectedGuide.name.split(' ')[0]}
                     </button>
