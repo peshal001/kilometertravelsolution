@@ -3,9 +3,11 @@
 import { useState } from 'react';
 
 export default function VirtualTourPreviews() {
-  const [selectedTour, setSelectedTour] = useState(null);
+  interface Hotspot { x: number; y: number; title: string; info: string }
+  interface Tour { id: number; name: string; description: string; image: string; hotspots: Hotspot[] }
+  const [selectedTour, setSelectedTour] = useState<Tour | null>(null);
 
-  const tours = [
+  const tours: Tour[] = [
     {
       id: 1,
       name: 'Everest Base Camp',
@@ -74,7 +76,7 @@ export default function VirtualTourPreviews() {
     }
   ];
 
-  const [hoveredHotspot, setHoveredHotspot] = useState(null);
+  const [hoveredHotspot, setHoveredHotspot] = useState<number | null>(null);
 
   return (
     <section className="py-20 bg-gray-50">

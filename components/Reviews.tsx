@@ -37,7 +37,7 @@ export default function Reviews() {
     }
   ];
 
-  const renderStars = (rating) => {
+  const renderStars = (rating: number) => {
     return [...Array(5)].map((_, i) => (
       <i key={i} className={`ri-star-${i < rating ? 'fill' : 'line'} text-yellow-400 w-4 h-4 flex items-center justify-center`}></i>
     ));

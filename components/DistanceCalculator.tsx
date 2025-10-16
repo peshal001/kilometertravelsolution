@@ -1,11 +1,22 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function DistanceCalculator() {
-  const [selectedRoute, setSelectedRoute] = useState('');
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const [selectedRoute, setSelectedRoute] = useState<Route | null>(null);
   const [showResult, setShowResult] = useState(false);
+  if (!mounted) {
+    return (
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="bg-gradient-to-r from-blue-50 to-red-50 rounded-2xl p-8 h-64 animate-pulse" />
+        </div>
+      </section>
+    );
+  }
 
   const routes = [
     { name: 'Kathmandu to Pokhara', distance: 200, time: '30 min', price: '$120' },
@@ -16,12 +27,19 @@ export default function DistanceCalculator() {
     { name: 'Kathmandu to Nepalgunj', distance: 518, time: '1h 15min', price: '$220' }
   ];
 
-  const handleRouteSelect = (route) => {
+  interface Route {
+    name: string;
+    distance: number;
+    time: string;
+    price: string;
+  }
+
+  const handleRouteSelect = (route: Route) => {
     setSelectedRoute(route);
     setShowResult(true);
   };
 
-  const selectedRouteData = routes.find(route => route.name === selectedRoute);
+  const selectedRouteData = selectedRoute;
 
   return (
     <section className="py-20 bg-white">
@@ -36,57 +54,41 @@ export default function DistanceCalculator() {
             <div>
               <h3 className="text-2xl font-semibold text-blue-900 mb-6">Select Your Route</h3>
               <div className="space-y-3">
-                {routes.map((route, index) => (
-                  <button
-                    key={index}
-                    onClick={() => handleRouteSelect(route.name)}
-                    className={`w-full p-4 rounded-lg border-2 transition-all duration-300 cursor-pointer whitespace-nowrap ${
-                      selectedRoute === route.name
-                        ? 'border-red-500 bg-red-50 text-red-700'
-                        : 'border-gray-200 bg-white hover:border-blue-300 hover:bg-blue-50'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="font-medium">{route.name}</span>
-                      <div className="flex items-center space-x-2">
-                        <span className="text-sm text-gray-500">{route.distance} km</span>
-                        <i className="ri-flight-takeoff-line w-4 h-4 flex items-center justify-center"></i>
-                      </div>
-                    </div>
-                  </button>
-                ))}
+                <select
+                  value={selectedRoute ? selectedRoute.name : ''}
+                  onChange={e => {
+                    const found = routes.find(route => route.name === e.target.value) || null;
+                    setSelectedRoute(found);
+                  }}
+                  className="w-full p-3 pr-8 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none"
+                >
+                  <option value="">Select a route</option>
+                  {routes.map(route => (
+                    <option key={route.name} value={route.name}>{route.name}</option>
+                  ))}
+                </select>
               </div>
             </div>
 
             <div className="bg-white rounded-xl p-6 shadow-lg">
               <h3 className="text-2xl font-semibold text-blue-900 mb-6">Route Details</h3>
               {showResult && selectedRouteData ? (
-                <div className="space-y-6">
-                  <div className="text-center">
-                    <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <i className="ri-flight-takeoff-fill text-red-600 text-3xl w-10 h-10 flex items-center justify-center"></i>
+                <div className="mt-8 bg-white rounded-lg shadow-md p-6 text-center">
+                  <h4 className="text-2xl font-bold text-blue-900 mb-2">{selectedRouteData.name}</h4>
+                  <div className="flex flex-col md:flex-row justify-center items-center gap-8">
+                    <div>
+                      <p className="text-gray-700 font-medium">Distance</p>
+                      <p className="text-3xl text-red-600 font-bold">{selectedRouteData.distance} km</p>
                     </div>
-                    <h4 className="text-xl font-semibold text-gray-800">{selectedRouteData.name}</h4>
-                  </div>
-                  
-                  <div className="grid grid-cols-3 gap-4 text-center">
-                    <div className="bg-blue-50 rounded-lg p-4">
-                      <div className="text-2xl font-bold text-blue-600">{selectedRouteData.distance}</div>
-                      <div className="text-sm text-gray-600">Kilometers</div>
+                    <div>
+                      <p className="text-gray-700 font-medium">Flight Time</p>
+                      <p className="text-3xl text-blue-900 font-bold">{selectedRouteData.time}</p>
                     </div>
-                    <div className="bg-red-50 rounded-lg p-4">
-                      <div className="text-2xl font-bold text-red-600">{selectedRouteData.time}</div>
-                      <div className="text-sm text-gray-600">Flight Time</div>
-                    </div>
-                    <div className="bg-green-50 rounded-lg p-4">
-                      <div className="text-2xl font-bold text-green-600">{selectedRouteData.price}</div>
-                      <div className="text-sm text-gray-600">Starting Price</div>
+                    <div>
+                      <p className="text-gray-700 font-medium">Price</p>
+                      <p className="text-3xl text-green-600 font-bold">{selectedRouteData.price}</p>
                     </div>
                   </div>
-                  
-                  <button className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-lg font-semibold transition-colors whitespace-nowrap cursor-pointer">
-                    Book This Flight
-                  </button>
                 </div>
               ) : (
                 <div className="text-center py-12">

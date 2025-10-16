@@ -3,8 +3,13 @@
 
 import { useState } from 'react';
 
+interface Destination {
+  name: string;
+  distance: number;
+}
+
 export default function ItineraryBuilder() {
-  const [selectedDestinations, setSelectedDestinations] = useState([]);
+  const [selectedDestinations, setSelectedDestinations] = useState<Destination[]>([]);
   const [totalDistance, setTotalDistance] = useState(0);
 
   const destinations = [
@@ -18,11 +23,11 @@ export default function ItineraryBuilder() {
     { name: 'Bhaktapur', distance: 15 }
   ];
 
-  const toggleDestination = (destination) => {
-    const isSelected = selectedDestinations.some(d => d.name === destination.name);
+  const toggleDestination = (destination: Destination) => {
+    const isSelected = selectedDestinations.some((d: Destination) => d.name === destination.name);
     
     if (isSelected) {
-      const newSelected = selectedDestinations.filter(d => d.name !== destination.name);
+      const newSelected = selectedDestinations.filter((d: Destination) => d.name !== destination.name);
       setSelectedDestinations(newSelected);
       calculateTotalDistance(newSelected);
     } else {
@@ -32,8 +37,8 @@ export default function ItineraryBuilder() {
     }
   };
 
-  const calculateTotalDistance = (destinations) => {
-    const total = destinations.reduce((sum, dest) => sum + dest.distance, 0);
+  const calculateTotalDistance = (destinations: Destination[]) => {
+    const total = destinations.reduce((sum: number, dest: Destination) => sum + dest.distance, 0);
     setTotalDistance(total);
   };
 

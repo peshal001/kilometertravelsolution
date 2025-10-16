@@ -3,9 +3,40 @@
 import { useState } from 'react';
 
 export default function CulturalImmersionHub() {
-  const [activeTab, setActiveTab] = useState('festivals');
+  const [activeTab, setActiveTab] = useState<TabKey>('festivals');
 
-  const culturalContent = {
+  type TabKey = 'festivals' | 'cuisine' | 'crafts';
+
+  interface FestivalItem {
+    name: string;
+    description: string;
+    season: string;
+    activities: string;
+    image: string;
+    package: string;
+  }
+  interface CuisineItem {
+    name: string;
+    description: string;
+    ingredients: string;
+    experience: string;
+    image: string;
+    package: string;
+  }
+  interface CraftItem {
+    name: string;
+    description: string;
+    technique: string;
+    experience: string;
+    image: string;
+    package: string;
+  }
+
+  const culturalContent: {
+    festivals: FestivalItem[];
+    cuisine: CuisineItem[];
+    crafts: CraftItem[];
+  } = {
     festivals: [
       {
         name: 'Dashain Festival',
@@ -106,7 +137,7 @@ export default function CulturalImmersionHub() {
               {tabs.map((tab) => (
                 <button
                   key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
+                  onClick={() => setActiveTab(tab.id as TabKey)}
                   className={`flex items-center px-6 py-4 font-medium transition-colors cursor-pointer ${
                     activeTab === tab.id
                       ? 'text-blue-600 border-b-2 border-blue-600'
@@ -122,7 +153,7 @@ export default function CulturalImmersionHub() {
 
           <div className="p-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {culturalContent[activeTab].map((item, index) => (
+              {(culturalContent[activeTab] as (FestivalItem | CuisineItem | CraftItem)[]).map((item, index: number) => (
                 <div key={index} className="bg-gray-50 rounded-lg overflow-hidden hover:shadow-md transition-shadow duration-300">
                   <img 
                     src={item.image} 
@@ -139,11 +170,11 @@ export default function CulturalImmersionHub() {
                         <>
                           <div className="flex items-center text-sm text-gray-600">
                             <i className="ri-calendar-line mr-2 w-4 h-4 flex items-center justify-center"></i>
-                            {item.season}
+                            {(item as FestivalItem).season}
                           </div>
                           <div className="flex items-center text-sm text-gray-600">
                             <i className="ri-star-line mr-2 w-4 h-4 flex items-center justify-center"></i>
-                            {item.activities}
+                            {(item as FestivalItem).activities}
                           </div>
                         </>
                       )}
@@ -152,11 +183,11 @@ export default function CulturalImmersionHub() {
                         <>
                           <div className="flex items-center text-sm text-gray-600">
                             <i className="ri-restaurant-line mr-2 w-4 h-4 flex items-center justify-center"></i>
-                            {item.ingredients}
+                            {(item as CuisineItem).ingredients}
                           </div>
                           <div className="flex items-center text-sm text-gray-600">
                             <i className="ri-hand-heart-line mr-2 w-4 h-4 flex items-center justify-center"></i>
-                            {item.experience}
+                            {(item as CuisineItem).experience}
                           </div>
                         </>
                       )}
@@ -165,11 +196,11 @@ export default function CulturalImmersionHub() {
                         <>
                           <div className="flex items-center text-sm text-gray-600">
                             <i className="ri-tools-line mr-2 w-4 h-4 flex items-center justify-center"></i>
-                            {item.technique}
+                            {(item as CraftItem).technique}
                           </div>
                           <div className="flex items-center text-sm text-gray-600">
                             <i className="ri-hand-heart-line mr-2 w-4 h-4 flex items-center justify-center"></i>
-                            {item.experience}
+                            {(item as CraftItem).experience}
                           </div>
                         </>
                       )}

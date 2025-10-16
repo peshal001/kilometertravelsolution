@@ -3,12 +3,22 @@
 import { useState } from 'react';
 
 export default function TravelPersonalityQuiz() {
+  type Personality = 'adventure' | 'relaxation' | 'cultural' | 'spiritual';
+  interface Destination {
+    name: string;
+    description: string;
+    image: string;
+    highlights: string[];
+  }
+  interface Option { text: string; value: Personality }
+  interface Question { question: string; options: Option[] }
+
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [answers, setAnswers] = useState({});
-  const [result, setResult] = useState(null);
+  const [answers, setAnswers] = useState<Record<number, Personality>>({});
+  const [result, setResult] = useState<Destination | null>(null);
   const [showQuiz, setShowQuiz] = useState(false);
 
-  const questions = [
+  const questions: Question[] = [
     {
       question: "What's your ideal vacation pace?",
       options: [
@@ -47,7 +57,7 @@ export default function TravelPersonalityQuiz() {
     }
   ];
 
-  const destinations = {
+  const destinations: Record<Personality, Destination> = {
     adventure: {
       name: "Everest Base Camp Trek",
       description: "Perfect for thrill-seekers! Experience the ultimate mountain adventure with breathtaking views and challenging trails.",
@@ -74,8 +84,8 @@ export default function TravelPersonalityQuiz() {
     }
   };
 
-  const handleAnswer = (value) => {
-    const newAnswers = { ...answers, [currentQuestion]: value };
+  const handleAnswer = (value: Personality) => {
+    const newAnswers: Record<number, Personality> = { ...answers, [currentQuestion]: value };
     setAnswers(newAnswers);
 
     if (currentQuestion < questions.length - 1) {
@@ -85,13 +95,13 @@ export default function TravelPersonalityQuiz() {
     }
   };
 
-  const calculateResult = (finalAnswers) => {
-    const counts = {};
-    Object.values(finalAnswers).forEach(answer => {
+  const calculateResult = (finalAnswers: Record<number, Personality>) => {
+    const counts: Record<Personality, number> = { adventure: 0, relaxation: 0, cultural: 0, spiritual: 0 };
+    Object.values(finalAnswers).forEach((answer: Personality) => {
       counts[answer] = (counts[answer] || 0) + 1;
     });
     
-    const topChoice = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
+    const topChoice = (Object.keys(counts) as Personality[]).reduce((a, b) => counts[a] > counts[b] ? a : b);
     setResult(destinations[topChoice]);
   };
 

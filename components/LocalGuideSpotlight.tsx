@@ -3,7 +3,22 @@
 import { useState } from 'react';
 
 export default function LocalGuideSpotlight() {
-  const [selectedGuide, setSelectedGuide] = useState(null);
+  interface Guide {
+  id: number;
+  name: string;
+  specialization: string;
+  experience: string;
+  languages: string[];
+  rating: number;
+  reviews: number;
+  bio: string;
+  expertise: string[];
+  image: string;
+  achievements: string[];
+  tours: string[];
+}
+
+const [selectedGuide, setSelectedGuide] = useState<Guide | null>(null);
 
   const guides = [
     {
@@ -207,7 +222,7 @@ export default function LocalGuideSpotlight() {
                       <div>
                         <h4 className="font-semibold text-gray-800 mb-2">Achievements</h4>
                         <ul className="space-y-1">
-                          {selectedGuide.achievements.map((achievement, index) => (
+                          {selectedGuide.achievements.map((achievement: string, index: number) => (
                             <li key={index} className="text-sm text-gray-600 flex items-center">
                               <i className="ri-check-line text-green-600 mr-2 w-4 h-4 flex items-center justify-center"></i>
                               {achievement}
@@ -219,7 +234,7 @@ export default function LocalGuideSpotlight() {
                       <div>
                         <h4 className="font-semibold text-gray-800 mb-2">Popular Tours</h4>
                         <div className="space-y-2">
-                          {selectedGuide.tours.map((tour, index) => (
+                          {selectedGuide.tours.map((tour: string, index: number) => (
                             <div key={index} className="bg-blue-50 text-blue-700 px-3 py-2 rounded-lg text-sm">
                               {tour}
                             </div>
@@ -254,7 +269,7 @@ export default function LocalGuideSpotlight() {
                     <div className="mb-6">
                       <h4 className="font-semibold text-gray-800 mb-2">Languages</h4>
                       <div className="flex flex-wrap gap-2">
-                        {selectedGuide.languages.map((lang, index) => (
+                        {selectedGuide.languages.map((lang: string, index: number) => (
                           <span key={index} className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">
                             {lang}
                           </span>
@@ -265,7 +280,7 @@ export default function LocalGuideSpotlight() {
                     <div className="mb-6">
                       <h4 className="font-semibold text-gray-800 mb-2">Expertise</h4>
                       <div className="flex flex-wrap gap-2">
-                        {selectedGuide.expertise.map((skill, index) => (
+                        {selectedGuide.expertise.map((skill: string, index: number) => (
                           <span key={index} className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">
                             {skill}
                           </span>

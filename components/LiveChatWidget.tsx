@@ -17,7 +17,12 @@ export default function LiveChatWidget() {
     { text: 'Trekking permits', response: 'We handle all trekking permits including TIMS cards and national park permits. Which trek are you planning?' }
   ];
 
-  const handleQuickReply = (reply) => {
+  interface QuickReply {
+    text: string;
+    response: string;
+  }
+
+  const handleQuickReply = (reply: QuickReply) => {
     setMessages([...messages, 
       { type: 'user', text: reply.text },
       { type: 'bot', text: reply.response }

@@ -2,16 +2,30 @@
 
 import { useState } from 'react';
 
+interface Destination {
+  name: string;
+  reason: string;
+  activities: string[];
+  image: string;
+}
+interface SeasonData {
+  season: string;
+  weather: string;
+  destinations: Destination[];
+  festivals: string[];
+  tips: string;
+}
+
 export default function SeasonalTravelPlanner() {
   const [selectedMonth, setSelectedMonth] = useState('');
-  const [recommendations, setRecommendations] = useState(null);
+  const [recommendations, setRecommendations] = useState<SeasonData | null>(null);
 
   const months = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
 
-  const seasonalData = {
+  const seasonalData: { [key: string]: SeasonData } = {
     January: {
       season: 'Winter',
       weather: 'Cold and dry',
@@ -94,7 +108,7 @@ export default function SeasonalTravelPlanner() {
     }
   };
 
-  const handleMonthSelect = (month) => {
+  const handleMonthSelect = (month: string) => {
     setSelectedMonth(month);
     setRecommendations(seasonalData[month] || null);
   };
@@ -110,7 +124,7 @@ export default function SeasonalTravelPlanner() {
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">Select Travel Month</label>
           <div className="grid grid-cols-3 gap-2">
-            {months.map((month) => (
+            {months.map((month: string) => (
               <button
                 key={month}
                 onClick={() => handleMonthSelect(month)}
@@ -132,7 +146,7 @@ export default function SeasonalTravelPlanner() {
               <h4 className="font-semibold text-blue-900 mb-2">{selectedMonth} - {recommendations.season}</h4>
               <p className="text-gray-700 mb-3">{recommendations.weather}</p>
               <div className="flex flex-wrap gap-2">
-                {recommendations.festivals.map((festival, index) => (
+                {recommendations.festivals.map((festival: string, index: number) => (
                   <span key={index} className="bg-red-100 text-red-700 px-2 py-1 rounded-full text-xs font-medium">
                     {festival}
                   </span>
@@ -143,7 +157,7 @@ export default function SeasonalTravelPlanner() {
             <div>
               <h4 className="font-semibold text-gray-800 mb-4">Recommended Destinations</h4>
               <div className="space-y-4">
-                {recommendations.destinations.map((dest, index) => (
+                {recommendations.destinations.map((dest: Destination, index: number) => (
                   <div key={index} className="border border-gray-200 rounded-lg p-4">
                     <div className="flex items-start space-x-4">
                       <img 
@@ -155,7 +169,7 @@ export default function SeasonalTravelPlanner() {
                         <h5 className="font-semibold text-blue-900">{dest.name}</h5>
                         <p className="text-sm text-gray-600 mb-2">{dest.reason}</p>
                         <div className="flex flex-wrap gap-1">
-                          {dest.activities.map((activity, i) => (
+                          {dest.activities.map((activity: string, i: number) => (
                             <span key={i} className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs">
                               {activity}
                             </span>

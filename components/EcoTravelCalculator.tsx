@@ -2,10 +2,23 @@
 
 import { useState } from 'react';
 
+interface TransportResult {
+  emissions: number;
+  cost: number;
+  savings: number;
+}
+interface EcoResult {
+  trip: string;
+  travelers: number;
+  flight: TransportResult;
+  bus: TransportResult;
+  car: TransportResult;
+}
+
 export default function EcoTravelCalculator() {
   const [selectedTrip, setSelectedTrip] = useState('');
   const [travelers, setTravelers] = useState(1);
-  const [result, setResult] = useState(null);
+  const [result, setResult] = useState<EcoResult | null>(null);
 
   const trips = [
     {

@@ -3,7 +3,21 @@
 import { useState } from 'react';
 
 export default function TravelerStoriesGallery() {
-  const [selectedStory, setSelectedStory] = useState(null);
+  interface Story {
+    id: number;
+    title: string;
+    author: string;
+    country: string;
+    date: string;
+    summary: string;
+    story: string;
+    image: string;
+    location: string;
+    rating: number;
+    highlights: string[];
+  }
+
+  const [selectedStory, setSelectedStory] = useState<Story | null>(null);
   const [showSubmitForm, setShowSubmitForm] = useState(false);
 
   const stories = [
@@ -87,7 +101,7 @@ export default function TravelerStoriesGallery() {
     }
   ];
 
-  const renderStars = (rating) => {
+  const renderStars = (rating: number) => {
     return [...Array(5)].map((_, i) => (
       <i key={i} className={`ri-star-${i < rating ? 'fill' : 'line'} text-yellow-400 w-4 h-4 flex items-center justify-center`}></i>
     ));
@@ -109,7 +123,7 @@ export default function TravelerStoriesGallery() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {stories.map((story) => (
+          {stories.map((story: Story) => (
             <div key={story.id} className="bg-gray-50 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
               <img 
                 src={story.image} 
@@ -145,7 +159,7 @@ export default function TravelerStoriesGallery() {
                 <p className="text-gray-600 mb-4">{story.summary}</p>
                 
                 <div className="flex flex-wrap gap-2 mb-4">
-                  {story.highlights.map((highlight, index) => (
+                  {story.highlights.map((highlight: string, index: number) => (
                     <span key={index} className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium">
                       {highlight}
                     </span>

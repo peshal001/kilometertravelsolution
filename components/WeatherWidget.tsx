@@ -4,9 +4,20 @@
 import { useState } from 'react';
 
 export default function WeatherWidget() {
-  const [selectedCity, setSelectedCity] = useState('Kathmandu');
+  type City = 'Kathmandu' | 'Pokhara' | 'Chitwan';
+  interface ForecastItem { day: string; high: string; low: string; icon: string }
+  interface CityWeather {
+    temperature: string;
+    condition: string;
+    humidity: string;
+    windSpeed: string;
+    icon: string;
+    forecast: ForecastItem[];
+  }
 
-  const weatherData = {
+  const [selectedCity, setSelectedCity] = useState<City>('Kathmandu');
+
+  const weatherData: Record<City, CityWeather> = {
     'Kathmandu': {
       temperature: '22°C',
       condition: 'Partly Cloudy',
@@ -58,7 +69,7 @@ export default function WeatherWidget() {
         <div className="relative">
           <select
             value={selectedCity}
-            onChange={(e) => setSelectedCity(e.target.value)}
+            onChange={(e) => setSelectedCity(e.target.value as City)}
             className="w-full p-3 pr-8 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none"
           >
             <option value="Kathmandu">Kathmandu</option>
@@ -95,7 +106,7 @@ export default function WeatherWidget() {
         <div>
           <h4 className="text-sm font-semibold text-gray-700 mb-2">3-Day Forecast</h4>
           <div className="space-y-2">
-            {currentWeather.forecast.map((day, index) => (
+            {currentWeather.forecast.map((day: ForecastItem, index: number) => (
               <div key={index} className="flex items-center justify-between py-2 border-b border-gray-100 last:border-b-0">
                 <span className="text-sm text-gray-600">{day.day}</span>
                 <div className="flex items-center space-x-2">

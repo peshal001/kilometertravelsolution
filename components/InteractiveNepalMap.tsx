@@ -2,9 +2,18 @@
 
 import { useState } from 'react';
 
+interface Destination {
+  name: string;
+  description: string;
+  activities: string[];
+  bestSeason: string;
+  highlights: string;
+  image: string;
+}
+
 export default function InteractiveNepalMap() {
-  const [selectedDestination, setSelectedDestination] = useState(null);
-  const [hoveredRegion, setHoveredRegion] = useState(null);
+  const [selectedDestination, setSelectedDestination] = useState<keyof typeof destinations | null>(null);
+  const [hoveredRegion, setHoveredRegion] = useState<keyof typeof destinations | null>(null);
 
   const destinations = {
     kathmandu: {
@@ -108,9 +117,9 @@ export default function InteractiveNepalMap() {
                     key={region.id}
                     className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer"
                     style={{ left: region.x, top: region.y }}
-                    onMouseEnter={() => setHoveredRegion(region.id)}
+                    onMouseEnter={() => setHoveredRegion(region.id as keyof typeof destinations)}
                     onMouseLeave={() => setHoveredRegion(null)}
-                    onClick={() => setSelectedDestination(region.id)}
+                    onClick={() => setSelectedDestination(region.id as keyof typeof destinations)}
                   >
                     <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 ${
                       hoveredRegion === region.id || selectedDestination === region.id
@@ -178,7 +187,7 @@ export default function InteractiveNepalMap() {
                       Popular Activities
                     </h4>
                     <div className="flex flex-wrap gap-2">
-                      {destinations[selectedDestination].activities.map((activity, index) => (
+                      {destinations[selectedDestination].activities.map((activity: string, index: number) => (
                         <span key={index} className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">
                           {activity}
                         </span>

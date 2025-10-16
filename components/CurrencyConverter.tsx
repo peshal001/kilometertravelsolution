@@ -9,11 +9,18 @@ export default function CurrencyConverter() {
   const [toCurrency, setToCurrency] = useState('NPR');
   const [result, setResult] = useState('');
 
-  const exchangeRates = {
-    'USD': { 'NPR': 132.50, 'EUR': 0.85, 'GBP': 0.73 },
-    'NPR': { 'USD': 0.0075, 'EUR': 0.0064, 'GBP': 0.0055 },
-    'EUR': { 'USD': 1.18, 'NPR': 156.25, 'GBP': 0.86 },
-    'GBP': { 'USD': 1.37, 'NPR': 181.25, 'EUR': 1.16 }
+  type Currency = 'USD' | 'NPR' | 'EUR' | 'GBP';
+  type ExchangeRates = {
+    [K in Currency]: {
+      [J in Currency]?: number;
+    };
+  };
+
+  const exchangeRates: ExchangeRates = {
+    USD: { NPR: 132.50, EUR: 0.85, GBP: 0.73 },
+    NPR: { USD: 0.0075, EUR: 0.0064, GBP: 0.0055 },
+    EUR: { USD: 1.18, NPR: 156.25, GBP: 0.86 },
+    GBP: { USD: 1.37, NPR: 181.25, EUR: 1.16 }
   };
 
   const currencies = [
@@ -28,9 +35,13 @@ export default function CurrencyConverter() {
       if (fromCurrency === toCurrency) {
         setResult(amount);
       } else {
-        const rate = exchangeRates[fromCurrency][toCurrency];
-        const convertedAmount = (parseFloat(amount) * rate).toFixed(2);
-        setResult(convertedAmount);
+        const rate = exchangeRates[fromCurrency as Currency]?.[toCurrency as Currency];
+        if (rate !== undefined) {
+          const convertedAmount = (parseFloat(amount) * rate).toFixed(2);
+          setResult(convertedAmount);
+        } else {
+          setResult('N/A');
+        }
       }
     }
   };
