@@ -749,6 +749,9 @@ video {
 .animate-pulse{
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
+.animate-\[fadeIn_0\.5s_ease-out\]{
+  animation: fadeIn 0.5s ease-out;
+}
 .cursor-not-allowed{
   cursor: not-allowed;
 }
@@ -1445,6 +1448,12 @@ video {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
+.delay-100{
+  transition-delay: 100ms;
+}
+.delay-200{
+  transition-delay: 200ms;
+}
 .duration-300{
   transition-duration: 300ms;
 }
@@ -1614,6 +1623,10 @@ video {
   .md\:text-7xl{
     font-size: 4.5rem;
     line-height: 1;
+  }
+  .md\:hover\:-translate-y-1:hover{
+    --tw-translate-y: -0.25rem;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
 }
 @media (min-width: 1024px){

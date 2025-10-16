@@ -59,6 +59,11 @@ export default function DistanceCalculator() {
                   onChange={e => {
                     const found = routes.find(route => route.name === e.target.value) || null;
                     setSelectedRoute(found);
+                    if (found) {
+                      handleRouteSelect(found);
+                    } else {
+                      setShowResult(false);
+                    }
                   }}
                   className="w-full p-3 pr-8 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none"
                 >
@@ -70,21 +75,21 @@ export default function DistanceCalculator() {
               </div>
             </div>
 
-            <div className="bg-white rounded-xl p-6 shadow-lg">
+            <div className="bg-white rounded-xl p-6 shadow-lg transition-all duration-500">
               <h3 className="text-2xl font-semibold text-blue-900 mb-6">Route Details</h3>
               {showResult && selectedRouteData ? (
-                <div className="mt-8 bg-white rounded-lg shadow-md p-6 text-center">
+                <div className="mt-8 bg-white rounded-lg shadow-md p-6 text-center animate-[fadeIn_0.5s_ease-out]">
                   <h4 className="text-2xl font-bold text-blue-900 mb-2">{selectedRouteData.name}</h4>
                   <div className="flex flex-col md:flex-row justify-center items-center gap-8">
-                    <div>
+                    <div className="transform transition-all duration-500 md:hover:-translate-y-1">
                       <p className="text-gray-700 font-medium">Distance</p>
                       <p className="text-3xl text-red-600 font-bold">{selectedRouteData.distance} km</p>
                     </div>
-                    <div>
+                    <div className="transform transition-all duration-500 md:hover:-translate-y-1 delay-100">
                       <p className="text-gray-700 font-medium">Flight Time</p>
                       <p className="text-3xl text-blue-900 font-bold">{selectedRouteData.time}</p>
                     </div>
-                    <div>
+                    <div className="transform transition-all duration-500 md:hover:-translate-y-1 delay-200">
                       <p className="text-gray-700 font-medium">Price</p>
                       <p className="text-3xl text-green-600 font-bold">{selectedRouteData.price}</p>
                     </div>
