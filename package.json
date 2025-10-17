@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "predeploy": "npm run build",
+    "predeploy": "npm run build && powershell -NoProfile -Command \"New-Item -ItemType File -Path out/.nojekyll -Force | Out-Null\"",
     "deploy": "gh-pages -d out",
     "dev": "cross-env NODE_ENV=development next dev -H 0.0.0.0 -p 3000",
     "build": "next build",
