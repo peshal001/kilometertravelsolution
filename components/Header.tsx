@@ -3,6 +3,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import logo from '../public/logo.png';
 
 export default function Header() {
   return (
@@ -11,7 +12,7 @@ export default function Header() {
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <div>
-              <Image src="/logo.png" alt="Kilometer Logo" width={64} height={64} style={{ objectFit: 'contain' }} />
+              <Image src={logo} alt="Kilometer Logo" width={64} height={64} style={{ objectFit: 'contain' }} />
             </div>
           </div>
 
