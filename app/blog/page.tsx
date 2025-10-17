@@ -4,6 +4,19 @@ import { useState } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
+type Post = {
+  id: number;
+  title: string;
+  excerpt: string;
+  content: string;
+  category: string;
+  author: string;
+  date: string;
+  readTime: string;
+  image: string;
+  tags: string[];
+};
+
 export default function BlogPage() {
   const [selectedCategory, setSelectedCategory] = useState('all');
 
@@ -16,7 +29,7 @@ export default function BlogPage() {
     { id: 'food', name: 'Food & Culture', icon: 'ri-restaurant-line' }
   ];
 
-  const blogPosts = [
+  const blogPosts: Post[] = [
     {
       id: 1,
       title: 'Top 5 Himalayan Treks for Beginners',
@@ -95,7 +108,7 @@ export default function BlogPage() {
     ? blogPosts 
     : blogPosts.filter(post => post.category === selectedCategory);
 
-  const [selectedPost, setSelectedPost] = useState(null);
+  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
 
   return (
     <div className="min-h-screen bg-white">
