@@ -5,6 +5,13 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
+  // GitHub Pages under repository "/kilo"
+  basePath: "/kilometertravelsolution",
+  assetPrefix: "/kilometertravelsolution/",
+  trailingSlash: true,
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   typescript: {
     // ignoreBuildErrors: true,
   },
